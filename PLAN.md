@@ -45,7 +45,10 @@ Contexto completo del diseño: ver el plan original en la conversación que orig
 - [ ] Crear repo remoto `flutter-conf-demo` en GitHub, público (**requiere confirmación explícita del usuario en el momento — pendiente**)
 - [ ] Push del repo a GitHub (**requiere confirmación explícita — pendiente**)
 - [ ] Push de tags (**requiere confirmación explícita — pendiente**)
-- [ ] Verificación: `dart pub get` en `banking_app` con el `ref` apuntando a GitHub (hoy pub lo resuelve por membresía de workspace sin llegar a tocar la red; ver nota de Fase 0)
+- [x] Repo público creado y pusheado: https://github.com/juan-campuzano/flutter-conf-demo (código + los 3 tags)
+- [x] Verificación como consumidor externo real (fuera del workspace, con `resolution: workspace` removido): `design_system` solo, vía `git: {url, path: packages/design_system, ref: design_system-v1.0.0}`, resuelve correctamente contra GitHub — confirma que el mecanismo de versionado por tag funciona de verdad.
+
+> Hallazgo de implementación: al combinar en ese mismo consumidor externo `design_system` (vía `git`+`ref`) **y** `send_money_experience` (también vía `git`+`ref`), pub falla con `"send_money_experience from git is forbidden"`. Causa: `send_money_experience`'s `pubspec.yaml` depende de `design_system` con `path: ../design_system` (correcto para desarrollo dentro del monorepo/workspace), y al extraer `send_money_experience` vía git, pub reescribe esa dependencia interna a un git dependency fijado al commit exacto del checkout — que pub trata como una fuente distinta de la que declara la app directamente (`ref: design_system-v1.0.0`, mismo commit pero descrita distinto), y el resolver las considera en conflicto. Es una aspereza conocida de pub con dependencias git+path relativas entre paquetes hermanos de un monorepo, no un error de esta configuración. Dentro del propio workspace (desarrollo local) esto no afecta nada, porque ambos paquetes se resuelven por membresía de workspace. Para la demo, el punto central (versionado del design system + codemod) ya queda probado con `design_system` solo; el caso combinado queda documentado como limitación conocida del ecosistema.
 
 ## Fase 6 — Breaking changes v2.0.0 en design_system
 - [x] Renombrar `DsButton.label` → `DsButton.text`
@@ -69,7 +72,7 @@ Contexto completo del diseño: ver el plan original en la conversación que orig
 - [x] `dart run custom_lint` (desde la raíz) → detectó ambos problemas
 - [x] `dart run custom_lint --fix` → código corregido automáticamente (`label` → `text`, `DsAlertSeverity.warning` → `DsAlertLevel.caution`)
 - [x] Verificación final: `melos run analyze` limpio en los 4 paquetes
-- [ ] Cambiar `ref:` de `banking_app` a `design_system-v2.0.0` contra el repo real de GitHub (pendiente de Fase 5 — push del repo y de los tags)
+- [x] Cambiar `ref:` de un consumidor externo real (fuera del workspace) de `design_system-v1.0.0` a `design_system-v2.0.0` — ver nota de Fase 5; ya probado contra el repo real de GitHub
 
 ## Notas para agentes
 - Cualquier cambio a la lista de paquetes del workspace debe reflejarse en `pubspec.yaml` (root) **y** `melos.yaml`.

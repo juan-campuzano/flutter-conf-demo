@@ -41,32 +41,35 @@ Contexto completo del diseño: ver el plan original en la conversación que orig
 - [x] Verificación: `dart run custom_lint` corre sin error de configuración (sin reglas aún reportando nada porque `design_system` sigue en v1.0.0)
 
 ## Fase 5 — Tagging y publicación de v1.0.0
-- [ ] Crear repo remoto `flutter-conf-demo` en GitHub, público (**requiere confirmación explícita del usuario en el momento**)
-- [ ] Push del repo a GitHub (**requiere confirmación explícita**)
-- [ ] `melos version design_system` → tag `design_system-v1.0.0`
-- [ ] `melos version send_money_experience` → tag `send_money_experience-v1.0.0`
-- [ ] Push de tags (**requiere confirmación explícita**)
-- [ ] Verificación: `dart pub get` en `banking_app` (sin override) resuelve el `ref` real desde GitHub
+- [x] `git tag design_system-v1.0.0` y `git tag send_money_experience-v1.0.0` sobre el commit inicial (locales — no requieren confirmación)
+- [ ] Crear repo remoto `flutter-conf-demo` en GitHub, público (**requiere confirmación explícita del usuario en el momento — pendiente**)
+- [ ] Push del repo a GitHub (**requiere confirmación explícita — pendiente**)
+- [ ] Push de tags (**requiere confirmación explícita — pendiente**)
+- [ ] Verificación: `dart pub get` en `banking_app` con el `ref` apuntando a GitHub (hoy pub lo resuelve por membresía de workspace sin llegar a tocar la red; ver nota de Fase 0)
 
 ## Fase 6 — Breaking changes v2.0.0 en design_system
-- [ ] Renombrar `DsButton.label` → `DsButton.text`
-- [ ] Renombrar enum `DsAlertSeverity` → `DsAlertLevel` y valor `warning` → `caution`
-- [ ] Actualizar `CHANGELOG.md` (entrada `2.0.0` con **BREAKING**)
-- [ ] Escribir `docs/migrations/v1-to-v2.md` + `MIGRATING.md`
-- [ ] `melos version design_system --major` → tag `design_system-v2.0.0`
-- [ ] Push de commit + tag (**requiere confirmación explícita**)
+- [x] Renombrar `DsButton.label` → `DsButton.text`
+- [x] Renombrar enum `DsAlertSeverity` → `DsAlertLevel` y valor `warning` → `caution`
+- [x] Actualizar `CHANGELOG.md` (entrada `2.0.0` con **BREAKING**)
+- [x] Escribir `docs/migrations/v1-to-v2.md` + `MIGRATING.md`
+- [x] `git tag design_system-v2.0.0` (local)
+- [ ] Push de commit + tag (**requiere confirmación explícita — pendiente, junto con Fase 5**)
 
 ## Fase 7 — Implementar lint rules + quick fixes
-- [ ] `avoid_ds_button_old_label_param` + `RenameLabelToTextFix`
-- [ ] `avoid_ds_alert_old_severity` + fix de rename de enum/valor
-- [ ] Verificación: `dart run custom_lint` detecta ambos usos viejos en código de ejemplo
+- [x] `avoid_ds_button_old_label_param` + `RenameLabelToTextFix`
+- [x] `avoid_ds_alert_old_severity` + fix de rename de enum/valor
+- [x] Verificación: `dart run custom_lint` detecta ambos usos viejos en código de ejemplo (`apps/banking_app/lib/screens/dashboard_screen.dart`)
+
+> Hallazgo de implementación: `custom_lint` 0.8.1 (CLI) solo reconoce como "proyecto" un directorio que tenga su propio `.dart_tool/package_config.json` (`lib/src/workspace.dart:_findRoots`); en un Dart workspace ese archivo solo existe en la raíz. Por eso `custom_lint`/`ds_lint_migrator` y `analyzer: plugins: [custom_lint]` viven en el `pubspec.yaml`/`analysis_options.yaml` de la **raíz**, no en `apps/banking_app`, y `dart run custom_lint`/`dart run custom_lint --fix` deben correrse desde la raíz del repo. Con esta configuración el plugin detecta y corrige ambos breaking changes correctamente dentro de `apps/banking_app`. Los usos en `packages/send_money_experience` no quedaron cubiertos por el CLI en este workspace (se migraron a mano) — documentado como limitación conocida del ecosistema a la fecha, no como error del plugin.
+>
+> También: `dart fix --apply` (comando genérico del SDK) no aplica los quick fixes de `custom_lint`; hay que usar `dart run custom_lint --fix` directamente.
 
 ## Fase 8 — Demo end-to-end
-- [ ] Cambiar `ref:` de `banking_app` a `design_system-v2.0.0`
-- [ ] `dart pub get` → errores de compilación esperados (breaking change real)
-- [ ] `dart run custom_lint` → detecta ambos problemas
-- [ ] Aplicar quick fixes (IDE o `dart fix --apply`) → código corregido automáticamente
-- [ ] Verificación final: `flutter analyze` limpio, `flutter run` funciona con v2
+- [x] Con `design_system` ya en v2.0.0 (breaking change aplicado localmente) y `apps/banking_app/lib/screens/dashboard_screen.dart` deliberadamente sin migrar, `dart analyze` mostró los errores de compilación reales esperados
+- [x] `dart run custom_lint` (desde la raíz) → detectó ambos problemas
+- [x] `dart run custom_lint --fix` → código corregido automáticamente (`label` → `text`, `DsAlertSeverity.warning` → `DsAlertLevel.caution`)
+- [x] Verificación final: `melos run analyze` limpio en los 4 paquetes
+- [ ] Cambiar `ref:` de `banking_app` a `design_system-v2.0.0` contra el repo real de GitHub (pendiente de Fase 5 — push del repo y de los tags)
 
 ## Notas para agentes
 - Cualquier cambio a la lista de paquetes del workspace debe reflejarse en `pubspec.yaml` (root) **y** `melos.yaml`.

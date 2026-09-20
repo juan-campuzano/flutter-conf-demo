@@ -48,7 +48,19 @@ Contexto completo del diseño: ver el plan original en la conversación que orig
 - [x] Repo público creado y pusheado: https://github.com/juan-campuzano/flutter-conf-demo (código + los 3 tags)
 - [x] Verificación como consumidor externo real (fuera del workspace, con `resolution: workspace` removido): `design_system` solo, vía `git: {url, path: packages/design_system, ref: design_system-v1.0.0}`, resuelve correctamente contra GitHub — confirma que el mecanismo de versionado por tag funciona de verdad.
 
-> Hallazgo de implementación: al combinar en ese mismo consumidor externo `design_system` (vía `git`+`ref`) **y** `send_money_experience` (también vía `git`+`ref`), pub falla con `"send_money_experience from git is forbidden"`. Causa: `send_money_experience`'s `pubspec.yaml` depende de `design_system` con `path: ../design_system` (correcto para desarrollo dentro del monorepo/workspace), y al extraer `send_money_experience` vía git, pub reescribe esa dependencia interna a un git dependency fijado al commit exacto del checkout — que pub trata como una fuente distinta de la que declara la app directamente (`ref: design_system-v1.0.0`, mismo commit pero descrita distinto), y el resolver las considera en conflicto. Es una aspereza conocida de pub con dependencias git+path relativas entre paquetes hermanos de un monorepo, no un error de esta configuración. Dentro del propio workspace (desarrollo local) esto no afecta nada, porque ambos paquetes se resuelven por membresía de workspace. Para la demo, el punto central (versionado del design system + codemod) ya queda probado con `design_system` solo; el caso combinado queda documentado como limitación conocida del ecosistema.
+> Hallazgo de implementación: al combinar en ese mismo consumidor externo `design_system` (vía `git`+`ref`) **y** `send_money_experience` (también vía `git`+`ref`), pub falla con `"send_money_experience from git is forbidden"`. Causa: `send_money_experience`'s `pubspec.yaml` depende de `design_system` con `path: ../design_system` (correcto para desarrollo dentro del monorepo/workspace), y al extraer `send_money_experience` vía git, pub reescribe esa dependencia interna a un git dependency fijado al commit exacto del checkout — que pub trata como una fuente distinta de la que declara la app directamente (`ref: design_system-v1.0.0`, mismo commit pero descrita distinto), y el resolver las considera en conflicto. Dentro del propio workspace (desarrollo local) esto no afecta nada, porque ambos paquetes se resuelven por membresía de workspace.
+>
+> **Solución para un consumidor externo real** (fuera de este workspace, por ejemplo alguien que solo clona `apps/banking_app`): agregar un `pubspec_overrides.yaml` junto a su `pubspec.yaml` fijando explícitamente la fuente de `design_system`, para que el resolver deje de comparar dos descripciones distintas del mismo paquete:
+> ```yaml
+> # pubspec_overrides.yaml de un consumidor externo (NO existe dentro de este monorepo)
+> dependency_overrides:
+>   design_system:
+>     git:
+>       url: https://github.com/juan-campuzano/flutter-conf-demo.git
+>       path: packages/design_system
+>       ref: design_system-v1.0.0
+> ```
+> Verificado: con este override, `dart pub get` resuelve `design_system` y `send_money_experience` juntos sin conflicto, contra los tags reales de GitHub. Ver `docs/consuming-externally.md` para el ejemplo completo. Nota: este override **no puede vivir dentro de `apps/banking_app/`** en este repo, porque `design_system`/`send_money_experience` son miembros del Dart workspace y pub rechaza overrides sobre paquetes del propio workspace ("Cannot override workspace packages") — es exclusivamente para quien consuma estos paquetes desde fuera del monorepo.
 
 ## Fase 6 — Breaking changes v2.0.0 en design_system
 - [x] Renombrar `DsButton.label` → `DsButton.text`

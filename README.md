@@ -27,4 +27,4 @@ melos bootstrap    # bootstrap de Melos sobre los mismos paquetes
 
 ## Consumo versionado
 
-`apps/banking_app/pubspec.yaml` declara `design_system` y `send_money_experience` como dependencias `git` con `path` + `ref` a un tag específico (así se demuestran migraciones reales entre versiones). Durante el desarrollo dentro de este monorepo, `apps/banking_app/pubspec_overrides.yaml` fuerza la resolución local por `path:` para no depender de tags ya pusheados.
+`apps/banking_app/pubspec.yaml` declara `design_system` y `send_money_experience` como dependencias `git` con `path` + `ref` a un tag específico (así se demuestran migraciones reales entre versiones). Dentro de este workspace, pub resuelve ambos paquetes localmente por membresía de workspace sin tocar la red. Para consumirlos desde fuera de este monorepo, ver [`docs/consuming-externally.md`](docs/consuming-externally.md).

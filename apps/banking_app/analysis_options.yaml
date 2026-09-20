@@ -1,0 +1,18 @@
+include: package:flutter_lints/flutter.yaml
+
+# `analyzer: plugins:` es el mecanismo de "legacy plugins", hoy marcado como
+# deprecated por el analyzer aunque sigue siendo la forma soportada de
+# registrar custom_lint como plugin del Dart Analysis Server.
+analyzer:
+  errors:
+    analysis_options_deprecated_plugins: ignore
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**
+  plugins:
+    - custom_lint

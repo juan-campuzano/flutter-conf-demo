@@ -1,0 +1,43 @@
+name: demo_monorepo
+publish_to: 'none'
+
+environment:
+  sdk: ^3.13.3
+
+workspace:
+  - apps/banking_app
+  - packages/design_system
+  - packages/send_money_experience
+  - tools/ds_lint_migrator
+
+dev_dependencies:
+  melos: ^8.8.0
+
+dependency_overrides:
+  cli_util: ^0.4.2
+
+melos:
+  command:
+    version:
+      branch: main
+      message: |
+        chore(release): version packages
+
+        {new_package_versions}
+
+  scripts:
+    analyze:
+      run: melos exec -- "dart analyze ."
+      description: Corre dart analyze en cada paquete/app del monorepo.
+
+    test:
+      run: melos exec --dir-exists="test" -- "flutter test"
+      description: Corre tests donde exista carpeta test/.
+
+    lint:custom:
+      run: melos exec --scope="banking_app" -- "dart run custom_lint"
+      description: Corre el plugin custom_lint sobre la app.
+
+    fix:ds-migration:
+      run: melos exec --scope="banking_app" -- "dart fix --apply"
+      description: Aplica automáticamente los quick fixes detectados por custom_lint.

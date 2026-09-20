@@ -1,0 +1,36 @@
+name: banking_app
+description: "Shell bancario demo — 100% visual, sin red."
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.13.3
+
+resolution: workspace
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  design_system:
+    git:
+      url: https://github.com/diegocampuzano62/flutter-conf-demo.git
+      path: packages/design_system
+      ref: design_system-v1.0.0
+
+  send_money_experience:
+    git:
+      url: https://github.com/diegocampuzano62/flutter-conf-demo.git
+      path: packages/send_money_experience
+      ref: send_money_experience-v1.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  custom_lint: ^0.8.1
+  ds_lint_migrator:
+    path: ../../tools/ds_lint_migrator
+
+flutter:
+  uses-material-design: true

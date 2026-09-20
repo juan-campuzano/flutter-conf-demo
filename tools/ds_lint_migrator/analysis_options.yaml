@@ -1,0 +1,9 @@
+include: package:lints/recommended.yaml
+
+# custom_lint_core 0.8.1 todavía expone ErrorReporter/AnalysisError/name2 en
+# las firmas que LintRule/Fix requieren sobreescribir, aunque el paquete
+# `analyzer` ya las marcó deprecated. No hay alternativa hasta que
+# custom_lint_core migre a los nuevos tipos (Diagnostic/DiagnosticReporter).
+analyzer:
+  errors:
+    deprecated_member_use: ignore

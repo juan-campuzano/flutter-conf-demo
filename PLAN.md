@@ -33,7 +33,7 @@ Contexto completo del diseño: ver el plan original en la conversación que orig
 - [x] Construir shell bancario (dashboard, cuentas, tarjetas, movimientos) usando `design_system`
 - [x] Montar `send_money_experience` como flujo acoplado
 - [x] `pubspec.yaml` con dependencias `git+ref` (verdad de producción). No hace falta `pubspec_overrides.yaml`: al ser `banking_app` miembro del Dart workspace, pub resuelve `design_system`/`send_money_experience` localmente sin importar la fuente `git:` declarada.
-- [ ] Verificación: `flutter run` levanta la app sin errores (pendiente de probar en un dispositivo/emulador; `dart analyze`/`dart pub get` ya son limpios)
+- [x] Verificación: `flutter run -d macos` levanta la app sin errores
 
 ## Fase 4 — custom_lint plugin (scaffolding)
 - [x] Crear paquete `ds_lint_migrator`

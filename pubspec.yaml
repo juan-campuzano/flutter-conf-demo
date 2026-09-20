@@ -12,6 +12,9 @@ workspace:
 
 dev_dependencies:
   melos: ^8.8.0
+  custom_lint: ^0.8.1
+  ds_lint_migrator:
+    path: tools/ds_lint_migrator
 
 dependency_overrides:
   cli_util: ^0.4.2
@@ -35,9 +38,13 @@ melos:
       description: Corre tests donde exista carpeta test/.
 
     lint:custom:
-      run: melos exec --scope="banking_app" -- "dart run custom_lint"
-      description: Corre el plugin custom_lint sobre la app.
+      run: dart run custom_lint
+      description: >-
+        Corre el plugin custom_lint sobre todo el workspace. Se ejecuta desde
+        la raíz (no por paquete) porque custom_lint todavía no descubre
+        `.dart_tool/package_config.json` por paquete en un Dart workspace,
+        solo el de la raíz.
 
     fix:ds-migration:
-      run: melos exec --scope="banking_app" -- "dart fix --apply"
+      run: dart fix --apply
       description: Aplica automáticamente los quick fixes detectados por custom_lint.

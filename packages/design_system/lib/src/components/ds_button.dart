@@ -6,16 +6,19 @@ import '../tokens/ds_spacing.dart';
 enum DsButtonVariant { primary, secondary, text }
 
 /// Botón estándar del design system.
+///
+/// v2.0.0: el parámetro `label` (v1.0.0) fue renombrado a `text`. Ver
+/// docs/migrations/v1-to-v2.md.
 class DsButton extends StatelessWidget {
   const DsButton({
     super.key,
-    required this.label,
+    required this.text,
     required this.onPressed,
     this.variant = DsButtonVariant.primary,
     this.isLoading = false,
   });
 
-  final String label;
+  final String text;
   final VoidCallback? onPressed;
   final DsButtonVariant variant;
   final bool isLoading;
@@ -28,7 +31,7 @@ class DsButton extends StatelessWidget {
             width: 18,
             child: CircularProgressIndicator(strokeWidth: 2),
           )
-        : Text(label);
+        : Text(text);
 
     final onTap = isLoading ? null : onPressed;
 

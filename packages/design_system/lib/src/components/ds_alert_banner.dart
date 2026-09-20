@@ -5,27 +5,27 @@ import '../tokens/ds_spacing.dart';
 
 /// Severidad de un [DsAlertBanner].
 ///
-/// v1.0.0 API. En v2.0.0 este tipo se renombra a `DsAlertLevel` y el valor
-/// `warning` se renombra a `caution` (ver docs/migrations/v1-to-v2.md).
-enum DsAlertSeverity { info, warning, error }
+/// v2.0.0: renombrado desde `DsAlertSeverity` (v1.0.0), y el valor `warning`
+/// fue renombrado a `caution`. Ver docs/migrations/v1-to-v2.md.
+enum DsAlertLevel { info, caution, error }
 
 /// Banner de alerta del design system.
 class DsAlertBanner extends StatelessWidget {
   const DsAlertBanner({
     super.key,
     required this.message,
-    this.severity = DsAlertSeverity.info,
+    this.severity = DsAlertLevel.info,
     this.onDismiss,
   });
 
   final String message;
-  final DsAlertSeverity severity;
+  final DsAlertLevel severity;
   final VoidCallback? onDismiss;
 
   Color get _color => switch (severity) {
-        DsAlertSeverity.info => DsColors.info,
-        DsAlertSeverity.warning => DsColors.warning,
-        DsAlertSeverity.error => DsColors.error,
+        DsAlertLevel.info => DsColors.info,
+        DsAlertLevel.caution => DsColors.warning,
+        DsAlertLevel.error => DsColors.error,
       };
 
   @override

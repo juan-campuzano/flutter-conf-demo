@@ -37,11 +37,11 @@ class ConfirmScreen extends StatelessWidget {
             const SizedBox(height: DsSpacing.md),
             const DsAlertBanner(
               message: 'Esta es una demo visual: no se realiza ninguna transacción real.',
-              severity: DsAlertSeverity.info,
+              severity: DsAlertLevel.info,
             ),
             const Spacer(),
             DsButton(
-              label: 'Confirmar y enviar',
+              text: 'Confirmar y enviar',
               onPressed: () {
                 Navigator.of(context).pushReplacement(
                   MaterialPageRoute(builder: (_) => const SuccessScreen()),

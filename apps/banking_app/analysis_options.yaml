@@ -1,11 +1,9 @@
 include: package:flutter_lints/flutter.yaml
 
-# `analyzer: plugins:` es el mecanismo de "legacy plugins", hoy marcado como
-# deprecated por el analyzer aunque sigue siendo la forma soportada de
-# registrar custom_lint como plugin del Dart Analysis Server.
+# custom_lint (con el plugin ds_lint_migrator) se configura en el
+# analysis_options.yaml de la raíz del workspace, no aquí — ver el comentario
+# ahí y PLAN.md para el porqué.
 analyzer:
-  errors:
-    analysis_options_deprecated_plugins: ignore
   exclude:
     - build/**
     - android/**
@@ -14,5 +12,3 @@ analyzer:
     - windows/**
     - macos/**
     - linux/**
-  plugins:
-    - custom_lint

@@ -18,6 +18,11 @@ class DashboardScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(DsSpacing.md),
         children: [
+          const DsAlertBanner(
+            message: 'Tu tarjeta Gold vence este mes.',
+            severity: DsAlertLevel.caution,
+          ),
+          const SizedBox(height: DsSpacing.md),
           DsCard(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,7 +37,7 @@ class DashboardScreen extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: DsButton(
-              label: 'Enviar dinero',
+              text: 'Enviar dinero',
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (_) => const SendMoneyFlow()),

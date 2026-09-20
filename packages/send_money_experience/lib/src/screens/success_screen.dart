@@ -19,7 +19,7 @@ class SuccessScreen extends StatelessWidget {
               Text('Tu envío se procesó correctamente', style: DsTypography.headingMedium),
               const SizedBox(height: DsSpacing.lg),
               DsButton(
-                label: 'Volver al inicio',
+                text: 'Volver al inicio',
                 onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
               ),
             ],

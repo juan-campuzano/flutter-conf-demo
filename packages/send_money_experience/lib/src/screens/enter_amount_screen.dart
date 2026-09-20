@@ -43,7 +43,7 @@ class _EnterAmountScreenState extends State<EnterAmountScreen> {
             SizedBox(
               width: double.infinity,
               child: DsButton(
-                label: 'Continuar',
+                text: 'Continuar',
                 onPressed: () {
                   final amount = double.tryParse(_controller.text) ?? 0;
                   Navigator.of(context).push(

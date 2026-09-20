@@ -1,6 +1,15 @@
 include: package:flutter_lints/flutter.yaml
 
+# custom_lint se configura aquí (raíz del workspace) y no en
+# apps/banking_app/analysis_options.yaml: el CLI de custom_lint 0.8.1 todavía
+# busca `.dart_tool/package_config.json` en el propio directorio del paquete
+# analizado, y en un Dart workspace ese archivo solo existe en la raíz. Ver
+# PLAN.md para más detalle.
 analyzer:
+  errors:
+    analysis_options_deprecated_plugins: ignore
+  plugins:
+    - custom_lint
   exclude:
     - build/**
     - '**/android/**'

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widget_previews.dart';
 
 import '../tokens/ds_colors.dart';
+import '../tokens/ds_spacing.dart';
 
 /// Campo de texto estándar del design system.
 ///
@@ -38,4 +40,26 @@ class DsTextField extends StatelessWidget {
       ),
     );
   }
+}
+
+@Preview(name: 'DsTextField — estados', group: 'design_system')
+Widget previewDsTextField() {
+  return const Padding(
+    padding: EdgeInsets.all(DsSpacing.md),
+    child: SizedBox(
+      width: 320,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          DsTextField(label: 'Monto (USD)', placeholder: '0.00'),
+          SizedBox(height: DsSpacing.sm),
+          DsTextField(
+            label: 'Correo',
+            placeholder: 'tu@correo.com',
+            errorText: 'Correo inválido',
+          ),
+        ],
+      ),
+    ),
+  );
 }

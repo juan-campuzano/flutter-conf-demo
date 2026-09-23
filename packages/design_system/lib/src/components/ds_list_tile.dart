@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widget_previews.dart';
 
 import '../tokens/ds_typography.dart';
 
@@ -29,4 +30,17 @@ class DsListTile extends StatelessWidget {
       onTap: onTap,
     );
   }
+}
+
+@Preview(name: 'DsListTile', group: 'design_system')
+Widget previewDsListTile() {
+  return const SizedBox(
+    width: 360,
+    child: DsListTile(
+      title: 'Supermercado La Central',
+      subtitle: '18 sep',
+      leading: Icon(Icons.shopping_cart_outlined),
+      trailing: Text('-\$85.40'),
+    ),
+  );
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widget_previews.dart';
 
 import '../tokens/ds_colors.dart';
 import '../tokens/ds_spacing.dart';
@@ -23,10 +24,10 @@ class DsAlertBanner extends StatelessWidget {
   final VoidCallback? onDismiss;
 
   Color get _color => switch (severity) {
-        DsAlertLevel.info => DsColors.info,
-        DsAlertLevel.caution => DsColors.warning,
-        DsAlertLevel.error => DsColors.error,
-      };
+    DsAlertLevel.info => DsColors.info,
+    DsAlertLevel.caution => DsColors.warning,
+    DsAlertLevel.error => DsColors.error,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,9 @@ class DsAlertBanner extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Expanded(child: Text(message, style: TextStyle(color: _color))),
+          Expanded(
+            child: Text(message, style: TextStyle(color: _color)),
+          ),
           if (onDismiss != null)
             IconButton(
               icon: Icon(Icons.close, color: _color, size: 18),
@@ -49,4 +52,30 @@ class DsAlertBanner extends StatelessWidget {
       ),
     );
   }
+}
+
+@Preview(name: 'DsAlertBanner — niveles', group: 'design_system')
+Widget previewDsAlertBanner() {
+  return const Padding(
+    padding: EdgeInsets.all(DsSpacing.md),
+    child: SizedBox(
+      width: 360,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          DsAlertBanner(message: 'Nuevo movimiento disponible.'),
+          SizedBox(height: DsSpacing.sm),
+          DsAlertBanner(
+            message: 'Tu tarjeta Gold vence este mes.',
+            severity: DsAlertLevel.caution,
+          ),
+          SizedBox(height: DsSpacing.sm),
+          DsAlertBanner(
+            message: 'No pudimos procesar tu pago.',
+            severity: DsAlertLevel.error,
+          ),
+        ],
+      ),
+    ),
+  );
 }

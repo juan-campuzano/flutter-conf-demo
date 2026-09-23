@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widget_previews.dart';
 
 import '../tokens/ds_colors.dart';
 import '../tokens/ds_spacing.dart';
@@ -70,4 +71,31 @@ class DsButton extends StatelessWidget {
         );
     }
   }
+}
+
+@Preview(name: 'DsButton — variantes', group: 'design_system')
+Widget previewDsButton() {
+  return Padding(
+    padding: const EdgeInsets.all(DsSpacing.md),
+    child: SizedBox(
+      width: 240,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          DsButton(text: 'Primario', onPressed: () {}),
+          const SizedBox(height: DsSpacing.sm),
+          DsButton(
+            text: 'Secundario',
+            variant: DsButtonVariant.secondary,
+            onPressed: () {},
+          ),
+          const SizedBox(height: DsSpacing.sm),
+          DsButton(text: 'Texto', variant: DsButtonVariant.text, onPressed: () {}),
+          const SizedBox(height: DsSpacing.sm),
+          DsButton(text: 'Cargando', isLoading: true, onPressed: () {}),
+        ],
+      ),
+    ),
+  );
 }

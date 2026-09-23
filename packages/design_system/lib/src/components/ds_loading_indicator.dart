@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widget_previews.dart';
 
 import '../tokens/ds_colors.dart';
 
@@ -20,4 +21,9 @@ class DsLoadingIndicator extends StatelessWidget {
       ),
     );
   }
+}
+
+@Preview(name: 'DsLoadingIndicator', group: 'design_system')
+Widget previewDsLoadingIndicator() {
+  return const Center(child: DsLoadingIndicator());
 }

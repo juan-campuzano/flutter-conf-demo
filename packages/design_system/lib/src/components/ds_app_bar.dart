@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widget_previews.dart';
 
 import '../tokens/ds_colors.dart';
 
@@ -24,4 +25,16 @@ class DsAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}
+
+@Preview(name: 'DsAppBar', group: 'design_system')
+Widget previewDsAppBar() {
+  return Scaffold(
+    appBar: DsAppBar(
+      title: 'Hola, Diego',
+      leadingIcon: Icons.arrow_back,
+      actions: [IconButton(icon: const Icon(Icons.notifications_outlined), onPressed: () {})],
+    ),
+    body: const SizedBox.shrink(),
+  );
 }

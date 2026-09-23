@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widget_previews.dart';
 
 import '../tokens/ds_colors.dart';
 import '../tokens/ds_spacing.dart';
@@ -41,4 +42,21 @@ class DsBadge extends StatelessWidget {
       ),
     );
   }
+}
+
+@Preview(name: 'DsBadge — variantes', group: 'design_system')
+Widget previewDsBadge() {
+  return const Padding(
+    padding: EdgeInsets.all(DsSpacing.md),
+    child: Wrap(
+      spacing: DsSpacing.sm,
+      runSpacing: DsSpacing.sm,
+      children: [
+        DsBadge(label: 'Pagado', variant: DsBadgeVariant.success),
+        DsBadge(label: 'Pendiente', variant: DsBadgeVariant.warning),
+        DsBadge(label: 'Cancelado', variant: DsBadgeVariant.danger),
+        DsBadge(label: 'Reembolsado', variant: DsBadgeVariant.neutral),
+      ],
+    ),
+  );
 }

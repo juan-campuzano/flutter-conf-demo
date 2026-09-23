@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widget_previews.dart';
 
 import '../tokens/ds_colors.dart';
+import '../tokens/ds_spacing.dart';
 
 enum DsAvatarSize { sm, md, lg }
 
@@ -41,4 +43,21 @@ class DsAvatar extends StatelessWidget {
           : null,
     );
   }
+}
+
+@Preview(name: 'DsAvatar — tamaños', group: 'design_system')
+Widget previewDsAvatar() {
+  return const Padding(
+    padding: EdgeInsets.all(DsSpacing.md),
+    child: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        DsAvatar(initials: 'DC', size: DsAvatarSize.sm),
+        SizedBox(width: DsSpacing.sm),
+        DsAvatar(initials: 'DC', size: DsAvatarSize.md),
+        SizedBox(width: DsSpacing.sm),
+        DsAvatar(initials: 'DC', size: DsAvatarSize.lg),
+      ],
+    ),
+  );
 }

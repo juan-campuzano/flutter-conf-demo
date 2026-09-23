@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widget_previews.dart';
 
 import '../tokens/ds_colors.dart';
+import '../tokens/ds_spacing.dart';
 
 enum DsAmountEmphasis { positive, negative, neutral }
 
@@ -36,4 +38,22 @@ class DsAmountLabel extends StatelessWidget {
       style: TextStyle(color: _color, fontWeight: FontWeight.w700, fontSize: 18),
     );
   }
+}
+
+@Preview(name: 'DsAmountLabel — énfasis', group: 'design_system')
+Widget previewDsAmountLabel() {
+  return const Padding(
+    padding: EdgeInsets.all(DsSpacing.md),
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        DsAmountLabel(amountCents: 452030, emphasis: DsAmountEmphasis.positive),
+        SizedBox(height: DsSpacing.xs),
+        DsAmountLabel(amountCents: -8540, emphasis: DsAmountEmphasis.negative),
+        SizedBox(height: DsSpacing.xs),
+        DsAmountLabel(amountCents: 12500, emphasis: DsAmountEmphasis.neutral),
+      ],
+    ),
+  );
 }

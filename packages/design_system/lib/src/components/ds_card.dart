@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widget_previews.dart';
 
 import '../tokens/ds_colors.dart';
 import '../tokens/ds_spacing.dart';
+import '../tokens/ds_typography.dart';
 
 /// Contenedor de tarjeta estándar del design system.
 class DsCard extends StatelessWidget {
@@ -25,4 +27,14 @@ class DsCard extends StatelessWidget {
       child: Padding(padding: padding, child: child),
     );
   }
+}
+
+@Preview(name: 'DsCard', group: 'design_system')
+Widget previewDsCard() {
+  return Padding(
+    padding: const EdgeInsets.all(DsSpacing.md),
+    child: DsCard(
+      child: Text('Contenido de ejemplo', style: DsTypography.bodyLarge),
+    ),
+  );
 }

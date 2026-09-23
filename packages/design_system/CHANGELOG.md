@@ -1,5 +1,11 @@
 # Changelog
 
+## 3.0.0
+
+- **BREAKING** `DsTextField`: el parámetro nombrado `hintText` fue renombrado a `placeholder`.
+- **BREAKING** `DsBadge`: el parámetro nombrado `color` fue renombrado a `variant`, y su tipo (`DsBadgeColor` → `DsBadgeVariant`) cambió los valores `error`/`info` a `danger`/`neutral` (`success`/`warning` sin cambio).
+- Ver la guía de migración: [`docs/migrations/v2-to-v3.md`](docs/migrations/v2-to-v3.md). Ambos cambios están cubiertos por el plugin `ds_lint_migrator` (custom_lint).
+
 ## 2.0.0
 
 - **BREAKING** `DsButton`: el parámetro nombrado `label` fue renombrado a `text`.

@@ -9,9 +9,10 @@ Todo el contenido es visual/mock — no hay llamadas de red ni datos reales. Ver
 | Paquete | Ubicación | Qué es |
 |---|---|---|
 | `banking_app` | `apps/banking_app` | Shell bancario ficticio que consume el design system y la experiencia de envío de dinero |
+| `merchant_app` | `apps/merchant_app` | Segunda app consumidora (punto de venta), para demostrar migraciones que afectan a varios consumidores del design system a la vez |
 | `design_system` | `packages/design_system` | Sistema de diseño versionado (11 componentes) |
 | `send_money_experience` | `packages/send_money_experience` | Experiencia de "envío de dinero" acoplable, versionada por separado |
-| `ds_lint_migrator` | `tools/ds_lint_migrator` | Plugin `custom_lint` (analysis server) con las reglas y quick fixes que migran código entre versiones del design system |
+| `ds_lint_migrator` | `tools/ds_lint_migrator` | Plugin `custom_lint` (analysis server) con las reglas y quick fixes que migran código entre versiones del design system, más un codemod standalone (`bin/migrate_workspace.dart`) que usa `package:analyzer` directamente — ver [su README](tools/ds_lint_migrator/README.md) |
 
 ## Monorepo tooling
 

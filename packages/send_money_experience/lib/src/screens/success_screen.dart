@@ -14,7 +14,7 @@ class SuccessScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const DsBadge(label: '¡Enviado!', color: DsBadgeColor.success),
+              const DsBadge(label: '¡Enviado!', variant: DsBadgeVariant.success),
               const SizedBox(height: DsSpacing.md),
               Text('Tu envío se procesó correctamente', style: DsTypography.headingMedium),
               const SizedBox(height: DsSpacing.lg),

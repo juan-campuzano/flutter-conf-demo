@@ -1,6 +1,6 @@
 name: design_system
 description: Sistema de diseño para la demo bancaria.
-version: 2.0.0
+version: 3.0.0
 publish_to: 'none'
 
 environment:

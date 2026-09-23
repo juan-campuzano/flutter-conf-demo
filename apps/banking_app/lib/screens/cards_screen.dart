@@ -33,10 +33,10 @@ class CardsScreen extends StatelessWidget {
                 if (card.limitCents > 0)
                   DsBadge(
                     label: 'Límite: \$${(card.limitCents / 100).toStringAsFixed(0)}',
-                    color: DsBadgeColor.info,
+                    variant: DsBadgeVariant.neutral,
                   )
                 else
-                  const DsBadge(label: 'Débito', color: DsBadgeColor.success),
+                  const DsBadge(label: 'Débito', variant: DsBadgeVariant.success),
               ],
             ),
           );

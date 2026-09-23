@@ -36,7 +36,7 @@ class _EnterAmountScreenState extends State<EnterAmountScreen> {
             const SizedBox(height: DsSpacing.md),
             DsTextField(
               label: 'Monto (USD)',
-              hintText: '0.00',
+              placeholder: '0.00',
               controller: _controller,
             ),
             const Spacer(),

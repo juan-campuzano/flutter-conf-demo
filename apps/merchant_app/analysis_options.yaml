@@ -1,0 +1,14 @@
+include: package:flutter_lints/flutter.yaml
+
+# custom_lint (con el plugin ds_lint_migrator) se configura en el
+# analysis_options.yaml de la raíz del workspace, no aquí — ver el comentario
+# ahí y PLAN.md para el porqué.
+analyzer:
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+    - web/**
+    - windows/**
+    - macos/**
+    - linux/**

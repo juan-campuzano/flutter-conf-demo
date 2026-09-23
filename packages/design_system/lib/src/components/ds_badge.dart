@@ -3,20 +3,25 @@ import 'package:flutter/material.dart';
 import '../tokens/ds_colors.dart';
 import '../tokens/ds_spacing.dart';
 
-enum DsBadgeColor { success, warning, error, info }
+enum DsBadgeVariant { success, warning, danger, neutral }
 
 /// Etiqueta pequeña de estado del design system.
+///
+/// v3.0.0: el parámetro `color` (v1/v2, tipo `DsBadgeColor`) fue renombrado a
+/// `variant` (tipo `DsBadgeVariant`); los valores `error`/`info` fueron
+/// renombrados a `danger`/`neutral` (`success`/`warning` sin cambio). Ver
+/// docs/migrations/v2-to-v3.md.
 class DsBadge extends StatelessWidget {
-  const DsBadge({super.key, required this.label, this.color = DsBadgeColor.info});
+  const DsBadge({super.key, required this.label, this.variant = DsBadgeVariant.neutral});
 
   final String label;
-  final DsBadgeColor color;
+  final DsBadgeVariant variant;
 
-  Color get _color => switch (color) {
-        DsBadgeColor.success => DsColors.success,
-        DsBadgeColor.warning => DsColors.warning,
-        DsBadgeColor.error => DsColors.error,
-        DsBadgeColor.info => DsColors.info,
+  Color get _color => switch (variant) {
+        DsBadgeVariant.success => DsColors.success,
+        DsBadgeVariant.warning => DsColors.warning,
+        DsBadgeVariant.danger => DsColors.error,
+        DsBadgeVariant.neutral => DsColors.info,
       };
 
   @override

@@ -6,6 +6,7 @@ environment:
 
 workspace:
   - apps/banking_app
+  - apps/merchant_app
   - packages/design_system
   - packages/send_money_experience
   - tools/ds_lint_migrator

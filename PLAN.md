@@ -86,6 +86,17 @@ Contexto completo del diseño: ver el plan original en la conversación que orig
 - [x] Verificación final: `melos run analyze` limpio en los 4 paquetes
 - [x] Cambiar `ref:` de un consumidor externo real (fuera del workspace) de `design_system-v1.0.0` a `design_system-v2.0.0` — ver nota de Fase 5; ya probado contra el repo real de GitHub
 
+## Fase 9 — Ampliar la demo: v3.0.0, segundo consumidor y codemod standalone
+- [x] `design_system` v3.0.0: `DsTextField.hintText` → `placeholder`; `DsBadge.color` (`DsBadgeColor`) → `variant` (`DsBadgeVariant`), con remapeo de valores (`error`→`danger`, `info`→`neutral`) — esta última es más compleja que los cambios de v2 porque renombra el parámetro **y** el tipo/valores a la vez.
+- [x] `docs/migrations/v2-to-v3.md` + `CHANGELOG.md` (`3.0.0`, **BREAKING**) + `MIGRATING.md` actualizado.
+- [x] Dos reglas nuevas + quick fixes en `ds_lint_migrator`: `avoid_ds_text_field_old_hint_param`, `avoid_ds_badge_old_color_api` (esta última reescribe nombre de argumento, tipo y valor en un solo fix).
+- [x] Nuevo consumidor `apps/merchant_app` (workspace member, `flutter create` + pantalla de punto de venta) usando la API vieja de `DsTextField`/`DsBadge`, para migrar dos apps a la vez.
+- [x] Codemod standalone `tools/ds_lint_migrator/bin/migrate_workspace.dart`: usa `AnalysisContextCollection` de `package:analyzer` directamente (sin `custom_lint`) para migrar en batch sobre todo el workspace — útil porque alcanza `packages/send_money_experience`, que el CLI de `custom_lint` no descubre en este workspace (ver hallazgo de Fase 7).
+- [x] Verificación: `dart analyze .` limpio en las 5 unidades del workspace tras `dart run custom_lint --fix` (banking_app, merchant_app) + `dart run tools/ds_lint_migrator/bin/migrate_workspace.dart` (send_money_experience) + un ajuste manual en `merchant_app` (un helper interno que también referenciaba el enum viejo, fuera del alcance de los quick fixes por diseño — cubren sitios de construcción de widgets, no firmas de funciones propias).
+- [x] Verificación: `flutter build macos` y ejecución real de `merchant_app` sin errores.
+
+> Nota de implementación: `melos bootstrap` / `melos exec` fallan en este entorno con un error de compilación en `melos` (`cli_util`: `BaseDirectories` no encontrado) — consecuencia del mismo conflicto de versión de `cli_util` documentado en la Fase 0 (`dependency_overrides: cli_util: ^0.4.2` para satisfacer a `custom_lint`, pero por debajo de lo que esta versión de `melos` espera). No se investigó más a fondo por quedar fuera del alcance de esta fase; la verificación funcional real se hizo con `dart analyze .` y `dart run custom_lint` directamente, que sí corren limpios.
+
 ## Notas para agentes
 - Cualquier cambio a la lista de paquetes del workspace debe reflejarse en `pubspec.yaml` (root) **y** `melos.yaml`.
 - No usar `git push --force` ni reescribir tags ya pusheados sin confirmación explícita del usuario — los tags son la base de resolución de las `git dependency` de pub.
